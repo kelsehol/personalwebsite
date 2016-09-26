@@ -215,7 +215,6 @@ jQuery(document).ready(function() {
 	$('#work-filter ul li').each(function(){
 		$(this).click(function(){
 			var dataFilter = $(this).attr('data-filter');
-			console.log(dataFilter);
 			
 			var dataFilterElements = $('.' + dataFilter).length;
 			$('.' + dataFilter).each(function(index){
