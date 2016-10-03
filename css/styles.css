@@ -34,7 +34,7 @@ select{color: white;padding: 0 1em; height: 2.4em;outline: none;border: 0;border
    Header Styles
    ========================================================================== */
 
-#header{overflow:hidden;height:auto;background: url('http://placehold.it/1920x1080/1a1a1a/F4594E&amptext=1920x1080') fixed no-repeat; height:100%;}
+#header{overflow:hidden;height:auto;background: #000000 fixed no-repeat; height:100%;}
 .no-touch #header{-webkit-background-size: cover;-moz-background-size: cover;-o-background-size: cover;background-size: cover;background-attachment: fixed;}
 
 #logo{display:none;}

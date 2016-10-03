@@ -3,7 +3,7 @@
 /*-----------------------------------------------------------------------------------*/
 
 /* Starting Animation on Load */
-$('<img/>').attr('src', 'http://placehold.it/1920x1080/1a1a1a/F4594E&amptext=1920x1080').load(function() {
+$('<img/>').attr('src', 'http://placehold.it/1920x1080/1a1a1a/F4594E&amptext=Kelsey Holland').load(function() {
 	jQuery('#logo').fadeIn(600, function() {
 		jQuery('h1').animate({opacity: '1', 'padding-top': '0'}, 500,function() {
 			jQuery('h2').animate({opacity: '1', 'padding-top': '0'}, 500,function() {
@@ -182,9 +182,6 @@ jQuery(document).ready(function() {
 			jQuery("#project-page").fadeIn(750);
 		});
 	    jQuery('#project').load(curWork+".html");
-		jQuery("#previous-project-name").load("work-"+previousWork+".html #project-title");
-		jQuery("#next-project-name").load("work-"+nextWork+".html #project-title");
-	
 	});
 	
 	/* Function to close project */
@@ -197,83 +194,11 @@ jQuery(document).ready(function() {
 		
 	});
 	
-	/* Function to load next project */
-	jQuery('#next-project').click(function(){
-		var cur = nextWork;
-		jQuery("#next-project-name").animate({"right":"8em","opacity":"0"}, 500, function(){
-			jQuery("#project").fadeOut(500,function(){
-				jQuery('#project').load("work-"+cur+".html");	
-				nextWork=cur+1;
-				previousWork=cur-1;
-				if (previousWork == 0){
-					previousWork=jQuery('.work').length;
-				}
-				if (nextWork == jQuery('.work').length+1){
-					nextWork=1;
-				}
-				jQuery("#previous-project-name").load("work-"+previousWork+".html #project-title");
-				jQuery("#next-project-name").load("work-"+nextWork+".html #project-title");
-				jQuery("#project").fadeIn(500);
-			});
-		});
-	});
-	
-	/* Function to load previous project */
-	jQuery('#previous-project').click(function(){
-		var cur = previousWork;
-		jQuery("#previous-project-name").animate({"left":"8em","opacity":"0"}, 500, function(){
-			jQuery("#project").fadeOut(500,function(){
-				jQuery('#project').load("work-"+cur+".html");	
-				nextWork=cur+1;
-				previousWork=cur-1;
-				if (previousWork == 0){
-					previousWork=jQuery('.work').length;
-				}
-				if (nextWork == jQuery('.work').length+1){
-					nextWork=1;
-				}
-				jQuery("#previous-project-name").load("work-"+previousWork+".html #project-title");
-				jQuery("#next-project-name").load("work-"+nextWork+".html #project-title");	
-				jQuery("#project").fadeIn(500);
-			});
-		});
-	});
-	
-	/* Works Top Bar */
-	jQuery(window).bind('scroll', function () {
-		if(jQuery(window).width()<767 && jQuery("#project-page").is(":visible")){	
-			var scrollTop = jQuery(window).scrollTop();
-			
-			if (scrollTop > jQuery('#project-details').offset().top-125) {
-				jQuery('#project-top-bar').addClass('fixed').stop().animate({top:0},500);
-			} else if(scrollTop < jQuery('#project-details').offset().top-125){
-				jQuery('#project-top-bar').stop().animate({top:'-60px'},500,function(){
-					jQuery('#project-top-bar').removeClass('fixed');
-				});
-			}
-		
-		}
-	});
-	
 	/* Filter for Works */
 	jQuery('#work-container').mixitup({
 		targetDisplayGrid: 'block' // required to fix bug in Chrome with images height
 	});
 
-	/* If we're on medium or large device animate next and previous project name while hovering arrow's */
-	if(jQuery(window).width()>767){	
-		jQuery('#next-project').mouseenter(function() {
-			jQuery("#next-project-name").stop().animate({"right":"4em","opacity":"1"}, 500);
-		}).mouseleave(function() {
-			jQuery("#next-project-name").animate({"right":"8em","opacity":"0"}, 500);
-		});
-		jQuery('#previous-project').mouseenter(function() {
-			jQuery("#previous-project-name").stop().animate({"left":"4em","opacity":"1"}, 500);
-		}).mouseleave(function() {
-			jQuery("#previous-project-name").animate({"left":"8em","opacity":"0"}, 500);
-		});
-	}
-	
 	/* Creates the filter menu for mobile version */
 	$('#work-filter ul').each(function(){
 		var select=$(document.createElement('select')).insertBefore($(this).parent()).addClass('show-for-small');;
@@ -281,10 +206,30 @@ jQuery(document).ready(function() {
 			option=$(document.createElement('option')).appendTo(select).val(this.href).html($(this).html()).addClass($(this).attr('data-filter'));
 		});
 	});
-	
+
 	/* Filtering for Select */
 	$('select').on('change',function(){
 		jQuery('#work-container').mixitup('filter',jQuery(this).find('option:selected').attr('class'));
+	});
+
+	$('#work-filter ul li').each(function(){
+		$(this).click(function(){
+			var dataFilter = $(this).attr('data-filter');
+			var dataFilterElements = $('.' + dataFilter).length;
+			
+			$('.' + dataFilter).each(function(index){
+				if(dataFilter!='all'){
+					if(index==1 && dataFilterElements==3){
+						$(this).addClass("large-offset-2");
+					}else if(index==1 && dataFilterElements==2){
+						$(this).addClass("large-offset-4");
+					}
+				}else{
+					$(this).removeClass("large-offset-2");
+					$(this).removeClass("large-offset-4");
+				}
+			});
+		})
 	});
 	
 	/*-----------------------------------------------------------------------------------*/
